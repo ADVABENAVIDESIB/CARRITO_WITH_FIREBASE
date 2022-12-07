@@ -1,0 +1,40 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Lista de productos
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-list>
+    <ion-item *ngFor="let item of productos; let i = index;">
+      <div style="display: flex;" class="ion-padding" [routerLink]="['/view-product', item.id]">
+        <ion-avatar>
+          <img [src]="item.img"/>
+        </ion-avatar>
+        <ion-label class="ion-margin">
+          {{item.name}}
+        </ion-label>
+        <ion-chip color="primary" mode="ios" outline="true">
+          <ion-label>${{item.price}}</ion-label>
+        </ion-chip> 
+      </div>
+      <ion-button slot="end" (click)="addProductById(i)"> <ion-icon name="cart"></ion-icon>
+       </ion-button>
+    </ion-item>
+  </ion-list>
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+    <ion-fab-button>
+      <ion-icon name="chevron-up-circle"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="top">
+      <ion-fab-button (click)="navigateCart()">
+        <ion-icon name="cart"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button [routerLink]="['/agregar-producto']">
+        <ion-icon name="add"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
+</ion-content>
