@@ -33,22 +33,42 @@ export class ViewCartPage implements OnInit {
   }
 
   ngOnInit() {
-   this.activatedRoute.queryParams.subscribe((params) => {
+  
+  /*  this.activatedRoute.queryParams.subscribe((params) => {
       this.productList = this.productsService.llenaCarro();
     });
     for (let i = 0; i < this.productList.length; i++) {
       this.total+=(this.productList[i].price*this.productList[i].amount);
-    } 
-/*     this.productsService.getProductosFromCart().subscribe(
+    } */
+    
+     this.productsService.getProductosFromCart().subscribe(
       res => {
         this.productList = res;
-        console.log(this.productList);
-        console.log("hola carrito");
+        //console.log("infinito");
+       // console.log(this.productList);
+       // console.log("hola carrito");
+        this.total=0;
+        for (let index = 0; index < this.productList.length; index++) {
+          let price = this.productList[index].price;
+          let amount = this.productList[index].amount;
+          this.total += price * amount;
+          
+        }
       }
-    ) */
+    ) 
 
   }
-  public removeProductoFromCart(id: number){    
+  public removeProductoFromCart(id: string){    
+    this.productsService.removeProductoFromCart(id);
+    this.total=0;
+    for (let index = 0; index < this.productList.length; index++) {
+      let price = this.productList[index].price;
+      let amount = this.productList[index].amount;
+      this.total += price * amount;
+      console.log(id);
+    }
+  }/* 
+  public removeProductoFromCart1(id: number){    
     this.total=0;
     this.productsService.removeProductFromCart(id);
     for (let index = 0; index < this.productList.length; index++) {
@@ -58,5 +78,5 @@ export class ViewCartPage implements OnInit {
       console.log(id);
     }
   }
-
+ */
 }

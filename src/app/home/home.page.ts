@@ -9,6 +9,10 @@ import { Router } from '@angular/router';
 })
 export class HomePage {
   public productos: Producto[];
+  public productoAuxiliar:Producto;
+
+  public listaAuxProductosEnCarro:Producto[];
+  public productoAuxiliarCarrito:Producto;
 
   public procuctosEnCarrito: Producto[]=[];
   constructor(private productservice: ProductsService, private ruta: Router) {
@@ -23,9 +27,58 @@ export class HomePage {
   }
 
 
-  public addProductById(i: number){
+/*   public addProductById(i: number){
     this.productservice.addProductById(i);
+  } */
+  public addProductoToCart(producto: Producto){
+    this.productoAuxiliar={
+      img: producto.img,
+      name: producto.name,
+      price: producto.price,
+      amount: 1
+      
+    }
+    this.productservice.addProductoToCart(this.productoAuxiliar);  
+
+    /*
+    var yaExistia=false;
+    this.productservice.getProductosFromCart().subscribe(
+      res => {
+        this.listaAuxProductosEnCarro = res;
+        var contador=0
+        console.log(this.listaAuxProductosEnCarro.length+ "longitud");
+        
+        for (let index = 0; index < this.listaAuxProductosEnCarro.length; index++) {
+          if(producto.name===this.listaAuxProductosEnCarro[index].name){
+            //si el producto que estoy mandando agregar, ya existe aumento el precio y la cantidad
+            //lo comparo por el nombee ya que el precio y cantidad cambian con el carrito
+            yaExistia=true;
+            this.listaAuxProductosEnCarro[index].amount+=1;
+            this.listaAuxProductosEnCarro[index].price+=producto.price;
+            this.productoAuxiliarCarrito=this.listaAuxProductosEnCarro[index];
+          }else{
+            console.log("nothing");
+            
+          }
+
+        }
+        if(yaExistia){
+          this.productservice.updateCarrito(this.productoAuxiliarCarrito,this.productoAuxiliarCarrito.id);
+        }else{
+          this.productoAuxiliar={
+            img: producto.img,
+            name: producto.name,
+            price: producto.price,
+            amount: 1
+            
+          }
+          this.productservice.addProductoToCart(this.productoAuxiliar);   
+
+        }  
+      }
+    )*/
   }
+  
 
   public navigateCart(){
     this.ruta.navigate(['/view-cart']);

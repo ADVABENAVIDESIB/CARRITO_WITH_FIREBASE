@@ -45,13 +45,14 @@ export class ProductsService {
       }
     ] */
     this.getProductos().subscribe(
+    
       res => {
         this.productos = res;
         console.log(this.productos);
       }
     )
    }
-   public getProducts(): Producto[]{
+/*    public getProducts(): Producto[]{
     return this.productos;
    }
 
@@ -99,15 +100,16 @@ export class ProductsService {
           return i
       }
       return -1
-    }
+    } */
     //firebase
     public getProductos(): Observable<Producto[]> {
+      
       return this.firestore.collection('productos').snapshotChanges().pipe(
         map(actions=> {
           return actions.map(a=>{
-            console.log(a);
+            //console.log(a);
             const data = a.payload.doc.data() as Producto;
-            console.log(data);
+            //console.log(data);
             const id = a.payload.doc.id;
             return { id,...data};
           })
@@ -126,24 +128,24 @@ export class ProductsService {
     }
 
     //carrito
-    public updateCarrito(productos: Producto[],id:string) {
-      this.firestore.collection('students').doc(id).update(productos)
-     }
+
      public addProductosToCart(productos: Producto[]) {
       this.firestore.collection('productosEnCarrito').add(productos);
     }
-/*
+
     public addProductoToCart(producto: Producto) {
       this.firestore.collection('productosEnCarrito').add(producto);
     }
+
     public getProductosFromCart(): Observable<Producto[]> {
-      
+      console.log("infinito getProductos");
+
       return this.firestore.collection('productosEnCarrito').snapshotChanges().pipe(
         map(actions=> {
           return actions.map(a=>{
-            console.log(a);
+           // console.log(a);
             const data = a.payload.doc.data() as Producto;
-            console.log(data);
+           // console.log(data);
             const id = a.payload.doc.id;
             return { id,...data};
           })
@@ -153,7 +155,10 @@ export class ProductsService {
 
     }
 
-    public removeProductoFromCart(nombre: string){
-      this.firestore.collection("productosEnCarrito").doc(nombre).delete();
-    }*/
+    public removeProductoFromCart(id: string){
+      this.firestore.collection("productosEnCarrito").doc(id).delete();
+    }
+    public updateCarrito(productos: Producto,id:string) {
+      this.firestore.collection('productosEnCarrito').doc(id).update(productos)
+     }
 }

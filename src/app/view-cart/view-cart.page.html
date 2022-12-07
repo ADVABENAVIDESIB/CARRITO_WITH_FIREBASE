@@ -23,7 +23,7 @@
       </ion-chip>
     </ion-item>
 
-    <ion-item-options side="end" (ionSwipe)="removeProductoFromCart(i)">
+    <ion-item-options side="end" (ionSwipe)="removeProductoFromCart(item.id)">
       <ion-item-option expandable color="danger">
         <ion-icon name="trash-outline"></ion-icon>
       </ion-item-option>

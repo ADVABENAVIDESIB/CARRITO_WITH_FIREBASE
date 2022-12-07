@@ -18,10 +18,10 @@ export class ViewProductPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.activatedRoute.paramMap.subscribe(paramMap => {
+/*     this.activatedRoute.paramMap.subscribe(paramMap => {
       const res = paramMap.get('id');
       this.producto = this.productsService.getProductById(res);
-    })
+    }) */
   }
 
 }
